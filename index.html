@@ -3,39 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>스마트 툴박스 - QRnShort</title>
+    <title>QR 코드 생성기</title>
     <link rel="stylesheet" href="style.css">
+    <!-- QR 코드 생성을 위한 라이브러리 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>스마트 툴박스 🧰</h1>
-        <p class="subtitle">QR코드 생성 및 URL 단축 서비스</p>
-        
-        <div class="tab-container">
-            <button class="tab-btn active" onclick="switchTab('qr')">QR코드 생성</button>
-            <button class="tab-btn" onclick="switchTab('shorten')">URL 단축</button>
+    <header class="top-header">
+        <!-- 1. 화면 상단 좌측에 img 폴더 안의 로고 이미지 배치 -->
+        <img src="img/logo.png" alt="Logo" class="logo">
+    </header>
+
+    <main class="container" id="main-container">
+        <!-- 3. 생성될 QR 코드 (초기에는 숨김 상태) -->
+        <div class="qr-section" id="qr-section">
+            <!-- 4. 클릭 시 다운로드 기능을 위해 title 속성 추가 -->
+            <div id="qrcode" class="qrcode-wrapper" title="클릭하여 JPG로 다운로드"></div>
+            <p class="hint">QR코드를 클릭하면 JPG 파일로 다운로드됩니다.</p>
         </div>
 
-        <div id="qr-section" class="content-section active">
-            <h2>QR코드 만들기</h2>
-            <input type="text" id="qr-input" placeholder="웹사이트 주소(URL)를 입력하세요">
-            <button onclick="generateQR()" class="action-btn">QR 생성하기</button>
-            <div class="result-box" id="qr-result">
-                <p class="placeholder-text">이곳에 QR코드가 나타납니다.</p>
-                <img id="qr-image" src="" alt="QR Code">
-            </div>
+        <!-- 2. 중앙에 위치한 심플한 URL 입력창 -->
+        <div class="input-section" id="input-section">
+            <input type="text" id="url-input" placeholder="웹사이트 주소(URL)를 입력하세요">
+            <button onclick="generateQR()">확인</button>
         </div>
+    </main>
 
-        <div id="shorten-section" class="content-section">
-            <h2>URL 단축하기</h2>
-            <input type="text" id="shorten-input" placeholder="단축할 긴 URL을 입력하세요 (예: https://...)">
-            <button onclick="shortenURL()" class="action-btn">URL 단축하기</button>
-            <div class="result-box" id="shorten-result">
-                <p class="placeholder-text">이곳에 단축된 URL이 나타납니다.</p>
-            </div>
-        </div>
-    </div>
-    
     <script src="script.js"></script>
 </body>
 </html>

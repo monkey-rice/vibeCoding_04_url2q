@@ -2,153 +2,108 @@
 
 body {
     font-family: 'Noto Sans KR', sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
     margin: 0;
-    color: #333;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f9fa;
+}
+
+.top-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px 30px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo {
+    height: 40px; 
+    object-fit: contain;
 }
 
 .container {
-    background: white;
-    padding: 40px 30px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-}
-
-h1 {
-    font-size: 26px;
-    margin: 0 0 5px 0;
-    color: #1a73e8;
-}
-
-.subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 25px;
-}
-
-.tab-container {
-    display: flex;
-    justify-content: space-between;
-    background-color: #f1f3f4;
-    border-radius: 8px;
-    padding: 5px;
-    margin-bottom: 25px;
-}
-
-.tab-btn {
     flex: 1;
-    padding: 12px 0;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    border-radius: 6px;
-    font-weight: bold;
-    font-size: 15px;
-    color: #5f6368;
-    transition: 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column; /* HTML 구조상 QR이 먼저, Input이 나중에 배치됨 */
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s ease;
 }
 
-.tab-btn.active {
-    background-color: white;
-    color: #1a73e8;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+/* 2. 중앙의 심플한 입력창 디자인 */
+.input-section {
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+    transition: transform 0.5s ease, margin 0.5s ease;
 }
 
-.content-section {
-    display: none;
-    animation: fadeIn 0.3s ease;
-}
-
-.content-section.active {
-    display: block;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #202124;
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    margin-bottom: 15px;
-    border: 1.5px solid #dadce0;
-    border-radius: 8px;
-    box-sizing: border-box;
-    font-size: 15px;
-    transition: border-color 0.2s;
-}
-
-input:focus {
+#url-input {
+    width: 350px;
+    padding: 15px 20px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 30px;
     outline: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: border-color 0.3s;
+}
+
+#url-input:focus {
     border-color: #1a73e8;
 }
 
-.action-btn {
-    width: 100%;
-    padding: 14px;
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
+button {
+    padding: 15px 25px;
     font-size: 16px;
-    transition: background-color 0.2s;
+    font-weight: bold;
+    color: white;
+    background-color: #1a73e8;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
 }
 
-.action-btn:hover {
+button:hover {
     background-color: #1557b0;
 }
 
-.result-box {
-    margin-top: 25px;
-    min-height: 180px;
-    background-color: #f8f9fa;
-    border: 2px dashed #dadce0;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* 3. URL 입력 후 QR이 중앙에 오고 입력창이 하단으로 내려가는 연출 */
+.qr-section {
+    display: none; /* 처음엔 공간 차지 안 함 */
     flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    margin-bottom: 40px; /* 입력창이 아래로 밀려나도록 간격 부여 */
+    transition: opacity 0.5s ease;
+}
+
+.qr-section.show {
+    display: flex;
+}
+
+.qrcode-wrapper {
     padding: 20px;
-    word-break: break-all;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.placeholder-text {
-    color: #9aa0a6;
+.qrcode-wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+}
+
+.hint {
+    margin-top: 15px;
     font-size: 14px;
-    margin: 0;
-}
-
-#qr-image {
-    max-width: 150px;
-    max-height: 150px;
-    display: none;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.short-url-link {
-    color: #1a73e8;
-    font-size: 20px;
+    color: #5f6368;
     font-weight: bold;
-    text-decoration: none;
-}
-
-.short-url-link:hover {
-    text-decoration: underline;
 }
